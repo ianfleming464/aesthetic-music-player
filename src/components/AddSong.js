@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { Link, AddBoxOutlined } from '@mui/icons-material';
 import { appTheme } from '../theme';
+import { styled } from '@mui/material/styles';
 
 function AddSong() {
   const [dialog, setDialog] = useState(false);
@@ -19,15 +20,11 @@ function AddSong() {
   }
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <MyContainerStyled>
       <Dialog sx={{ textAlign: 'center' }} open={dialog} onClose={handleCloseDialog}>
         <DialogTitle>Edit Song</DialogTitle>
         <DialogContent>
-          <img
-            src='http://img.youtube.com/vi/--ZtUFsIgMk/0.jpg'
-            alt='Song thumbnail'
-            style={{ width: '90%' }}
-          />
+          <AlbumThumbnail src='http://img.youtube.com/vi/--ZtUFsIgMk/0.jpg' alt='Song thumbnail' />
           <TextField margin='dense' name='title' label='Title' fullWidth />
           <TextField margin='dense' name='artist' label='Artist' fullWidth />
           <TextField margin='dense' name='thumbnail' label='Thumbnail' fullWidth />
@@ -37,8 +34,7 @@ function AddSong() {
           <Button variant='outlined'>Add Song</Button>
         </DialogActions>
       </Dialog>
-      <TextField
-        sx={{ margin: appTheme.spacing(1) }}
+      <InputUrl
         placeholder='Add Youtube or Soundcloud Url'
         fullWidth
         margin='normal'
@@ -58,8 +54,23 @@ function AddSong() {
         endIcon={<AddBoxOutlined />}>
         Add
       </Button>
-    </div>
+    </MyContainerStyled>
   );
 }
 
 export default AddSong;
+
+// styled components
+
+const MyContainerStyled = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+});
+
+const InputUrl = styled(TextField)({
+  margin: appTheme.spacing(1),
+});
+
+const AlbumThumbnail = styled('img')({
+  width: '90%',
+});
