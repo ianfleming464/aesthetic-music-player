@@ -1,10 +1,14 @@
-import { createTheme } from '@mui/material/styles';
 import { teal, purple } from '@mui/material/colors';
+import { createTheme } from '@mui/material/styles';
 
 export const appTheme = createTheme({
   palette: {
-    mode: 'dark',
-    primary: teal,
-    secondary: purple,
+    primary: {
+      main: teal[500],
+    },
+    secondary: {
+      main: purple[500],
+    },
   },
+  spacing: 4,
 });

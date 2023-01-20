@@ -6,7 +6,7 @@ import React from 'react';
 
 function Header() {
   return (
-    <AppBar sx={{ background: 'teal' }} position='fixed'>
+    <AppBar position='fixed'>
       <Toolbar>
         <HeadsetTwoTone />
         <Typography sx={{ ml: 8 }} variant='h6' component='h1'>
