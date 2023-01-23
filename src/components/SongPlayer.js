@@ -3,10 +3,9 @@ import QueuedSongList from './QueuedSongList';
 
 function SongPlayer() {
   return (
-    <div>
-      SongPlayer
+    <>
       <QueuedSongList />
-    </div>
+    </>
   );
 }
 

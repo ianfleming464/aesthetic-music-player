@@ -10,5 +10,4 @@ export const appTheme = createTheme({
       main: purple[500],
     },
   },
-  spacing: 4,
 });
