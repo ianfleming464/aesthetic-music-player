@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, IconButton, Typography } from '@mui/material';
 import { Delete } from '@mui/icons-material';
+import { styled } from '@mui/material/styles';
 
 function QueuedSongList() {
   const song = {
@@ -24,21 +25,45 @@ function QueuedSongList() {
 function QueuedSong({ song }) {
   const { thumbnail, artist, title } = song;
   return (
-    <div>
-      <Avatar src={thumbnail} alt='Song thumbnail' />
-      <div>
-        <Typography variant='subtitle2'>{title}</Typography>
-        <Typography color='textSecondary' variant='body2'>
+    <QueueContainer>
+      <QueueAvatar src={thumbnail} alt='Song thumbnail' />
+      <SongInfoContainer>
+        <QueueText variant='subtitle2'>{title}</QueueText>
+        <QueueText color='textSecondary' variant='body2'>
           {artist}
-        </Typography>
-      </div>
+        </QueueText>
+      </SongInfoContainer>
       <IconButton>
         <Delete color='error' />
       </IconButton>
-    </div>
+    </QueueContainer>
   );
 }
 
 export default QueuedSongList;
 
 // styled components
+
+const QueueAvatar = styled(Avatar)({
+  width: 44,
+  height: 44,
+});
+
+const QueueText = styled(Typography)({
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+});
+
+const QueueContainer = styled('div')({
+  display: 'grid',
+  gridAutoFlow: 'column',
+  gridTemplateColumns: '50px auto 50px',
+  gridGap: 12,
+  alignItems: 'center',
+  marginTop: 10,
+});
+
+const SongInfoContainer = styled('div')({
+  overflow: 'hidden',
+  whitespace: 'nowrap',
+});
