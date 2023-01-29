@@ -1,9 +1,11 @@
 import React from 'react';
-import { Avatar, IconButton, Typography } from '@mui/material';
+import { Avatar, IconButton, Typography, useMediaQuery } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 
 function QueuedSongList() {
+  const greaterThanMedium = useMediaQuery(theme => theme.breakpoints.up('md'));
+
   const song = {
     title: 'LÜNE',
     artist: 'MÖÖN',
@@ -11,14 +13,16 @@ function QueuedSongList() {
   };
 
   return (
-    <div style={{ margin: '10px 0' }}>
-      <Typography color='textSecondary' variant='button'>
-        QUEUE (5)
-      </Typography>
-      {Array.from({ length: 5 }, () => song).map((song, i) => (
-        <QueuedSong key={i} song={song} />
-      ))}
-    </div>
+    greaterThanMedium && (
+      <div style={{ margin: '10px 0' }}>
+        <Typography color='textSecondary' variant='button'>
+          QUEUE (5)
+        </Typography>
+        {Array.from({ length: 5 }, () => song).map((song, i) => (
+          <QueuedSong key={i} song={song} />
+        ))}
+      </div>
+    )
   );
 }
 
