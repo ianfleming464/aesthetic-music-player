@@ -31,6 +31,11 @@ function AddSong() {
     setPlayable(isPlayable);
   }, [url]);
 
+  function handleChangeSong(event) {
+    const { name, value } = event.target;
+    setSong(prevSong => ({ ...prevSong, [name]: value }));
+  }
+
   function handleCloseDialog() {
     setDialog(false);
   }
@@ -80,13 +85,28 @@ function AddSong() {
         <DialogTitle>Edit Song</DialogTitle>
         <DialogContent>
           <AlbumThumbnail src={thumbnail} alt='Song thumbnail' />
-          <TextField value={title} margin='dense' name='title' label='Title' fullWidth />
-          <TextField value={artist} margin='dense' name='artist' label='Artist' fullWidth />
+          <TextField
+            value={title}
+            margin='dense'
+            name='title'
+            label='Title'
+            onChange={handleChangeSong}
+            fullWidth
+          />
+          <TextField
+            value={artist}
+            margin='dense'
+            name='artist'
+            label='Artist'
+            onChange={handleChangeSong}
+            fullWidth
+          />
           <TextField
             value={thumbnail}
             margin='dense'
             name='thumbnail'
             label='Thumbnail'
+            onChange={handleChangeSong}
             fullWidth
           />
         </DialogContent>
