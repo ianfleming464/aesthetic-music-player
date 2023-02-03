@@ -14,17 +14,22 @@ import { styled } from '@mui/material/styles';
 import ReactPlayer from 'react-player';
 import SoundCloudPlayer from 'react-player/soundcloud';
 import YouTubePlayer from 'react-player/youtube';
+import { useMutation } from '@apollo/client';
+import { ADD_SONG } from '../graphql/mutations';
+
+const DEFAULT_SONG = {
+  duration: 0,
+  title: '',
+  artist: '',
+  thumbnail: '',
+};
 
 function AddSong() {
+  const [addSong, { error }] = useMutation(ADD_SONG);
   const [url, setUrl] = useState('');
   const [dialog, setDialog] = useState(false);
   const [playable, setPlayable] = useState(false);
-  const [song, setSong] = useState({
-    duration: 0,
-    title: '',
-    artist: '',
-    thumbnail: '',
-  });
+  const [song, setSong] = useState(DEFAULT_SONG);
 
   useEffect(() => {
     const isPlayable = SoundCloudPlayer.canPlay(url) || YouTubePlayer.canPlay(url);
@@ -49,6 +54,26 @@ function AddSong() {
       songData = await getSoundcloudInfo(nestedPlayer);
     }
     setSong({ ...songData, url });
+  }
+
+  async function handleAddSong() {
+    try {
+      const { url, thumbnail, duration, title, artist } = song;
+      await addSong({
+        variables: {
+          url: url.length > 0 ? url : null,
+          thumbnail: thumbnail.length > 0 ? thumbnail : null,
+          duration: duration > 0 ? duration : null,
+          title: title.length > 0 ? title : null,
+          artist: artist.length > 0 ? artist : null,
+        },
+      });
+      handleCloseDialog();
+      setSong(DEFAULT_SONG);
+      setUrl('');
+    } catch (error) {
+      console.error('Error adding song', error);
+    }
   }
 
   function getYoutubeInfo(player) {
@@ -77,6 +102,11 @@ function AddSong() {
       });
     });
   }
+
+  function handleError(field) {
+    return error?.graphQLErrors[0]?.extensions?.path.includes(field);
+  }
+
   const { thumbnail, title, artist } = song;
 
   return (
@@ -92,6 +122,8 @@ function AddSong() {
             label='Title'
             onChange={handleChangeSong}
             fullWidth
+            error={handleError('title')}
+            helperText={handleError('title') && 'Fill out field'}
           />
           <TextField
             value={artist}
@@ -100,6 +132,8 @@ function AddSong() {
             label='Artist'
             onChange={handleChangeSong}
             fullWidth
+            error={handleError('artist')}
+            helperText={handleError('artist') && 'Fill out field'}
           />
           <TextField
             value={thumbnail}
@@ -108,11 +142,15 @@ function AddSong() {
             label='Thumbnail'
             onChange={handleChangeSong}
             fullWidth
+            error={handleError('thumbnail')}
+            helperText={handleError('thumbnail') && 'Fill out field'}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>Cancel</Button>
-          <Button variant='outlined'>Add Song</Button>
+          <Button onClick={handleAddSong} variant='outlined'>
+            Add Song
+          </Button>
         </DialogActions>
       </Dialog>
       <InputUrl
