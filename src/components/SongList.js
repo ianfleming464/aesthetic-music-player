@@ -11,11 +11,11 @@ import {
 import { appTheme } from '../theme';
 import { styled } from '@mui/material/styles';
 import React from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_SONGS } from '../graphql/queries';
+import { useSubscription } from '@apollo/client';
+import { GET_SONGS } from '../graphql/subscriptions';
 
 function SongList() {
-  const { data, loading, error } = useQuery(GET_SONGS);
+  const { data, loading, error } = useSubscription(GET_SONGS);
 
   if (loading) {
     return (
