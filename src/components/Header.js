@@ -18,5 +18,5 @@ function Header() {
 export default Header;
 
 const HeaderTitle = styled(Typography)({
-  marginLeft: 8,
+  marginLeft: 20,
 });

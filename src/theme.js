@@ -1,13 +1,12 @@
-import { teal, purple } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
 export const appTheme = createTheme({
   palette: {
     primary: {
-      main: teal[500],
+      main: '#65B8BF',
     },
     secondary: {
-      main: purple[500],
+      main: '#8F8CF2',
     },
   },
 });

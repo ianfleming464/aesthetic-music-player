@@ -9,7 +9,6 @@ function App() {
   const greaterThanMedium = useMediaQuery(theme => theme.breakpoints.up('md'));
 
   return (
-    //   <CssBaseline enableColorScheme />
     <>
       <Hidden only='xs'>
         <Header />
