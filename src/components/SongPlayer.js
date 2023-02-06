@@ -1,29 +1,36 @@
-import { PlayArrow, SkipPrevious, SkipNext } from '@mui/icons-material';
+import { PlayArrow, SkipPrevious, SkipNext, Pause } from '@mui/icons-material';
 import { Card, CardContent, CardMedia, IconButton, Slider, Typography } from '@mui/material';
-import React from 'react';
+import React, { useContext } from 'react';
 import { appTheme } from '../theme';
 import QueuedSongList from './QueuedSongList';
 import { styled } from '@mui/material/styles';
+import { SongContext } from '../App';
 
 function SongPlayer() {
+  const { state, dispatch } = useContext(SongContext);
+
+  function handleTogglePlay() {
+    dispatch(state.isPlaying ? { type: 'PAUSE_SONG' } : { type: 'PLAY_SONG' });
+  }
+
   return (
     <>
       <PlayerContainer variant='outlined'>
         <PlayerDetails>
           <PlayerContent>
             <Typography variant='h5' component='h3'>
-              Title
+              {state.song.title}
             </Typography>
             <Typography variant='subtitle1' component='p' color='textSecondary'>
-              Artist
+              {state.song.artist}
             </Typography>
           </PlayerContent>
           <PlayerControls>
             <IconButton>
               <SkipPrevious />
             </IconButton>
-            <IconButton>
-              <PlayerPlayIcon />
+            <IconButton onClick={handleTogglePlay}>
+              {state.isPlaying ? <PlayerPauseIcon /> : <PlayerPlayIcon />}
             </IconButton>
             <IconButton>
               <SkipNext />
@@ -36,7 +43,7 @@ function SongPlayer() {
 
           <Slider type='range' min={0} max={1} step={0.01} />
         </PlayerDetails>
-        <PlayerThumbnail image='http://img.youtube.com/vi/--ZtUFsIgMk/0.jpg' />
+        <PlayerThumbnail image={state.song.thumbnail} />
       </PlayerContainer>
       <QueuedSongList />
     </>
@@ -74,6 +81,11 @@ const PlayerControls = styled('div')({
 });
 
 const PlayerPlayIcon = styled(PlayArrow)({
+  height: 38,
+  width: 38,
+});
+
+const PlayerPauseIcon = styled(Pause)({
   height: 38,
   width: 38,
 });
