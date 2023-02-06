@@ -3,7 +3,8 @@ import { Avatar, IconButton, Typography, useMediaQuery } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 
-function QueuedSongList() {
+function QueuedSongList({ queue }) {
+  console.log({ queue });
   const greaterThanMedium = useMediaQuery(theme => theme.breakpoints.up('md'));
 
   const song = {

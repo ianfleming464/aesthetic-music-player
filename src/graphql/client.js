@@ -1,4 +1,6 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { GET_QUEUED_SONGS } from './queries';
 
 import { WebSocketLink } from '@apollo/client/link/ws';
 
@@ -16,11 +18,45 @@ const client = new ApolloClient({
     },
   }),
   cache: new InMemoryCache(),
+  typeDefs: gql`
+    type Song {
+      id: uuid!
+      title: String!
+      artist: String!
+      thumbnail: String!
+      duration: Float!
+      url: String!
+    }
+    input SongInput {
+      id: uuid!
+      title: String!
+      artist: String!
+      thumbnail: String!
+      duration: Float!
+      url: String!
+    }
+
+    type Query {
+      queue: [Song]!
+    }
+    type Mutation {
+      addOrRemoveFromQueue(input: SongInput!): [Song]!
+    }
+  `,
+});
+
+const data = {
+  queue: [],
+};
+
+client.writeQuery({
+  query: GET_QUEUED_SONGS,
+  data,
 });
 
 export default client;
 
-// POTENITAL TO-DO: Refactor to split links between Http and Websocket, depending on Query or Subscription?
+// POTENTIAL TO-DO: Refactor to split links between Http and Websocket, depending on Query or Subscription?
 
 // The following commented code is an unsuccessful attempt at incorporating graphql-ws
 

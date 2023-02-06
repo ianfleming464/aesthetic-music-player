@@ -5,8 +5,11 @@ import { appTheme } from '../theme';
 import QueuedSongList from './QueuedSongList';
 import { styled } from '@mui/material/styles';
 import { SongContext } from '../App';
+import { useQuery } from '@apollo/client';
+import { GET_QUEUED_SONGS } from '../graphql/queries';
 
 function SongPlayer() {
+  const { data, loading, error } = useQuery(GET_QUEUED_SONGS);
   const { state, dispatch } = useContext(SongContext);
 
   function handleTogglePlay() {
@@ -45,7 +48,7 @@ function SongPlayer() {
         </PlayerDetails>
         <PlayerThumbnail image={state.song.thumbnail} />
       </PlayerContainer>
-      <QueuedSongList />
+      <QueuedSongList queue={data.queue} />
     </>
   );
 }
