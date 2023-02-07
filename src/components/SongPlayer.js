@@ -1,16 +1,18 @@
 import { PlayArrow, SkipPrevious, SkipNext, Pause } from '@mui/icons-material';
 import { Card, CardContent, CardMedia, IconButton, Slider, Typography } from '@mui/material';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { appTheme } from '../theme';
 import QueuedSongList from './QueuedSongList';
 import { styled } from '@mui/material/styles';
 import { SongContext } from '../App';
 import { useQuery } from '@apollo/client';
 import { GET_QUEUED_SONGS } from '../graphql/queries';
+import ReactPlayer from 'react-player';
 
 function SongPlayer() {
   const { data, loading, error } = useQuery(GET_QUEUED_SONGS);
   const { state, dispatch } = useContext(SongContext);
+  const [played, setPlayed] = useState(0);
 
   function handleTogglePlay() {
     dispatch(state.isPlaying ? { type: 'PAUSE_SONG' } : { type: 'PLAY_SONG' });
@@ -46,6 +48,12 @@ function SongPlayer() {
 
           <Slider type='range' min={0} max={1} step={0.01} />
         </PlayerDetails>
+        <ReactPlayer
+          onProgress={({ played, playedSeconds }) => {}}
+          url={state.song.url}
+          playing={state.isPlaying}
+          hidden
+        />
         <PlayerThumbnail image={state.song.thumbnail} />
       </PlayerContainer>
       <QueuedSongList queue={data.queue} />
