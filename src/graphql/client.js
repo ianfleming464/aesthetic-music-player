@@ -35,7 +35,6 @@ const client = new ApolloClient({
       duration: Float!
       url: String!
     }
-
     type Query {
       queue: [Song]!
     }
@@ -43,6 +42,29 @@ const client = new ApolloClient({
       addOrRemoveFromQueue(input: SongInput!): [Song]!
     }
   `,
+  resolvers: {
+    Mutation: {
+      addOrRemoveFromQueue: (_, { input }, { cache }) => {
+        const queryResult = cache.readQuery({
+          query: GET_QUEUED_SONGS,
+        });
+        // read from the queue; read from the query; update queue
+        if (queryResult) {
+          const { queue } = queryResult;
+          const isInQueue = queue.some(song => song.id === input.id);
+          const newQueue = isInQueue
+            ? queue.filter(song => song.id !== input.id)
+            : [...queue, input];
+          cache.writeQuery({
+            query: GET_QUEUED_SONGS,
+            data: { queue: newQueue },
+          });
+          return newQueue;
+        }
+        return [];
+      },
+    },
+  },
 });
 
 const data = {
