@@ -10,3 +10,9 @@ export const appTheme = createTheme({
     },
   },
 });
+
+export const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});

@@ -117,6 +117,7 @@ function AddSong() {
           <AlbumThumbnail src={thumbnail} alt='Song thumbnail' />
           <TextField
             value={title}
+            variant='standard'
             margin='dense'
             name='title'
             label='Title'
@@ -127,6 +128,7 @@ function AddSong() {
           />
           <TextField
             value={artist}
+            variant='standard'
             margin='dense'
             name='artist'
             label='Artist'
@@ -137,6 +139,7 @@ function AddSong() {
           />
           <TextField
             value={thumbnail}
+            variant='standard'
             margin='dense'
             name='thumbnail'
             label='Thumbnail'
@@ -160,6 +163,7 @@ function AddSong() {
         fullWidth
         margin='normal'
         type='url'
+        variant='standard'
         InputProps={{
           startAdornment: (
             <InputAdornment position='start'>
@@ -191,7 +195,7 @@ const MyContainerStyled = styled('div')({
 });
 
 const InputUrl = styled(TextField)({
-  margin: appTheme.spacing(1),
+  margin: appTheme.spacing(3),
 });
 
 const AlbumThumbnail = styled('img')({
