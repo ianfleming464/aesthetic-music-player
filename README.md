@@ -18,4 +18,4 @@ The songs in the queue are saved in local storage, so you won't lose your playli
 
 ## Challenges:
 
-coming soon..
+Created from an out-of-date coursework idea, which needed complete updating to exclude using Heroku, and to include new versions of Apollo-client, Hasura and Material UI. Further deatils coming soon..
