@@ -9,7 +9,7 @@ function Header() {
       <Toolbar sx={{ justifyContent: 'flex-start' }}>
         <HeadsetTwoTone />
         <HeaderTitle variant='h6' component='h1'>
-          a e s t h e t i c - m u s i c - s h a r e
+          a e s t h e t i c - m u s i c - p l a y e r
         </HeaderTitle>
         <Button
           variant='contained'
